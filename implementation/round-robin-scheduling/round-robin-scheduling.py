@@ -9,6 +9,13 @@ def round_robin(tasks, time_quantum):
     Returns:
         None
     """
+    if time_quantum <= 0:
+        raise ValueError("Time quantum must be greater than zero.")
+
+    for task_name, execution_time in tasks:
+        if execution_time < 0:
+            raise ValueError("Task execution time cannot be negative.")
+        
     queue = tasks.copy() 
     time_elapsed = 0
 
@@ -25,7 +32,7 @@ def round_robin(tasks, time_quantum):
             queue.append((task_name, execution_time - time_quantum))
             print(f"Task {task_name} executed for {time_quantum} units. Remaining: {execution_time - time_quantum}.")
 
-# Example usage
-tasks = [("Task1", 10), ("Task2", 4), ("Task3", 7)]  # Task names and execution times
-time_quantum = 3 
-round_robin(tasks, time_quantum)
+if __name__ == "__main__":
+    tasks = [("Task1", 10), ("Task2", 4), ("Task3", 7)]
+    time_quantum = 3
+    round_robin(tasks, time_quantum)
